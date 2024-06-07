@@ -36,29 +36,35 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
+# routes for people of Starwars
 @app.route('/people', methods=['GET'])
 def get_people():
-
-    response_body = {
-        "msg": "Hello, this is your GET /user response "
-    }
-
-    return jsonify(response_body), 200
-
-@app.route('/planets', methods=['GET'])
-def get_planets():
-    response_body = {
-        "msg": "This is your GET /planets response"
-    }
+    response_body = Person.query.all()
+    response_body = list(map(lambda x: x.serialize(), response_body))
     return jsonify(response_body), 200
 
 @app.route('/people/<int:people_id>', methods=['GET'])
-def get_one_person():
-    pass
+def get_one_person(people_id):
+
+    single_person = Person.query.get(people_id)
+    if single_person is None:
+        raise APIException(f'Person ID {people_id} not found.', status_code=404)
+
+    return jsonify(single_person.serialize()), 200
+
+@app.route('/planets', methods=['GET'])
+def get_planets():
+    response_body = Planet.query.all()
+    response_body = list(map(lambda x: x.serialize(), response_body))
+    return jsonify(response_body), 200
 
 @app.route('/planets/<int:planet_id>', methods=['GET'])
-def get_one_planet():
-    pass
+def get_one_planet(planet_id):
+    single_planet = Planet.query.get(planet_id)
+    if single_planet is None:
+        raise APIException(f'Planet ID {planet_id} not found.', status_code=404)
+
+    return jsonify(single_planet.serialize()), 200
 
 
 
