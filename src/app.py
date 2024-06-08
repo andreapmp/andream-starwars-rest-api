@@ -52,6 +52,7 @@ def get_one_person(people_id):
 
     return jsonify(single_person.serialize()), 200
 
+# routes for planets of Starwars
 @app.route('/planets', methods=['GET'])
 def get_planets():
     response_body = Planet.query.all()
@@ -65,6 +66,39 @@ def get_one_planet(planet_id):
         raise APIException(f'Planet ID {planet_id} not found.', status_code=404)
 
     return jsonify(single_planet.serialize()), 200
+
+# users and favorites
+@app.route('/users', methods=['GET'])
+def get_all_users():
+    pass
+
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_one_user():
+    pass
+
+@app.route('/users/<int:user_id>/favorites', methods=['GET'])
+def get_one_user_favorites():
+    pass
+
+@app.route('/users/<int:user_id>/favorites/people/<int:people_id>', methods=['POST'])
+def add_one_person_to_favorites():
+    pass
+
+@app.route('/users/<int:user_id>/favorites/planet/<int:planet_id>', methods=['POST'])
+def add_one_planet_to_favorites():
+    pass
+
+@app.route('/users/<int:user_id>/favorites/people/<int:people_id>', methods=['DELETE'])
+def delete_one_person_from_favorites():
+    pass
+
+@app.route('/users/<int:user_id>/favorites/planet/<int:planet_id>', methods=['DELETE'])
+def delete_one_planet_from_favorites():
+    pass
+
+
+
+
 
 
 
